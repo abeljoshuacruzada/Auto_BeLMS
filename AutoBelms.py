@@ -62,8 +62,8 @@ models = {
         'degree': 3,
         'C':1.0,
         'coef0':0.0,
-        'max_iter':1000,
         'random_state':0,
+        'max_iter':1000,
         'glist':None
     },
 }

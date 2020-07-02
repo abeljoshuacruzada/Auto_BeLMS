@@ -29,7 +29,7 @@ class MySVM(MyMLModels):
         """
         super().__init__(sim_size, test_size)
         self.setting = 'gamma'
-        self.log = False
+        self.log = True
         self.kernel = 'rbf'
         self.degree = 3
         self.C = 1.0
