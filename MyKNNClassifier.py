@@ -173,3 +173,17 @@ class MyKNNClassifier(MyMLModels):
             # Plot confusion matrix
             ax = self._fill_confusionmatrix(ax, confmat)
         return dict(confmat=confmat, report=report, ax=ax)
+    
+    def get_bestparameter(self):
+        """Return the best parameter"""
+        if self._df_test is None:
+            raise RuntimeError('get_bestparameter: please the '
+                                   'train model first')
+        mean = self._df_test.mean(axis=1)
+        if len(mean) == 1:
+            result = mean.idxmax()
+        elif len(mean) == 2:
+            result = mean.loc[mean.index > 1].idxmax()
+        else:
+            result = mean.loc[mean.index > 2].idxmax()
+        return result
