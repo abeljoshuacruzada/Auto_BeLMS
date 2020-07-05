@@ -16,6 +16,7 @@ Other Changes:
 	* AutoBelms.simulate renamed to AutoBelms.simulate_classifiers
 	* AutoBelms.classifier_models['njobs'] renamed to AutoBelms.classifier_models['n_jobs']
 	* Fix bug for KNN and SVM get_toppredictors
+	* Fix bug for AutoBelms simulate_classifiers
 
 Note:
 To run Example.ipynb, place the notebook outside Auto_BeLMS directory
