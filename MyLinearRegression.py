@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 from sklearn.model_selection import train_test_split
-from sklearn.exceptions import ConvergenceWarning
 from sklearn.linear_model import Ridge, Lasso
 from tqdm.autonotebook import tqdm
 from .MyLinearModels import MyLinearModels
@@ -94,8 +93,7 @@ class MyLinearRegression(MyLinearModels):
                 for a in alist:
                     # Create linear regression for each alpha
                     with warnings.catch_warnings():
-                        warnings.filterwarnings("ignore",
-                                                category=ConvergenceWarning)
+                        warnings.filterwarnings("ignore")
                         cls = model(alpha=a,
                                     fit_intercept=fit_intercept,
                                     normalize=normalize,
