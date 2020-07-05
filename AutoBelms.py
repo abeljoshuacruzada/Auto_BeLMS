@@ -29,7 +29,7 @@ classifier_models = {
         'dual': False,
         'random_state': 0,
         'n_jobs': None,
-        'clist': None
+        'clist': None  # If None, will simulate clist in MyMLModels
     },
     'Logistic Regression L2': {
         'model': MyLogisticRegression,
@@ -39,7 +39,7 @@ classifier_models = {
         'dual': False,
         'random_state': 0,
         'n_jobs': None,
-        'clist': None
+        'clist': None  # If None, will simulate clist in MyMLModels
     },
     'Linear SVM L1': {
         'model': MyLinearSVM,
@@ -48,7 +48,7 @@ classifier_models = {
         'max_iter': 1000,
         'dual': False,
         'random_state': 0,
-        'clist': None
+        'clist': None  # If None, will simulate clist in MyMLModels
     },
     'Linear SVM L2': {
         'model': MyLinearSVM,
@@ -57,7 +57,7 @@ classifier_models = {
         'max_iter': 1000,
         'dual': True,
         'random_state': 0,
-        'clist': None
+        'clist': None  # If None, will simulate clist in MyMLModels
     },
     'Non-Linear SVM RBF': {
         'model': MySVM,
@@ -67,7 +67,7 @@ classifier_models = {
         'coef0': 0.0,
         'random_state': 0,
         'max_iter': 1000,
-        'glist': None
+        'glist': None  # If None, will simulate glist in MyMLModels
     },
 }
 
@@ -81,7 +81,7 @@ regression_models = {
         'max_iter': 1000,
         'tol': 0.001,
         'random_state': None,
-        'alist': None
+        'alist': None  # If None, will simulate alist in MyMLModels
     },
     'Ridge Regression L2': {
         'model': MyLinearRegression,
@@ -91,7 +91,7 @@ regression_models = {
         'max_iter': 1000,
         'tol': 0.001,
         'random_state': None,
-        'alist': None
+        'alist': None  # If None, will simulate alist in MyMLModels
     }
 }
 

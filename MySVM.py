@@ -171,10 +171,11 @@ class MySVM(MyMLModels):
                 x = self._X.iloc[:, i].to_numpy().reshape(-1, 1)
                 df_score[i] = cross_val_score(svc, x, self._y)
         # Get score sorted by highest
-        df_score = (df_score.mean()
-                    .sort_values(ascending=False).to_frame())
-        df_score.set_index(self._X.columns, inplace=True)
-        return df_score.rename(columns={0: 'score'})
+        df_score = df_score.mean()
+        df_score.index = features
+        df_score = (df_score.sort_values(ascending=False)
+                    .to_frame().rename(columns={0: 'score'}))
+        return df_score
 
     def get_metric(self, X=None, y=None, kernel='rbf', degree=3, gamma=None,
                    C=1.0, coef0=0.0, max_iter=100,
