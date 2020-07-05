@@ -152,7 +152,7 @@ def simulate_classifiers(X, y, models, sim_size=20, test_size=0.25,
             plt.tight_layout()
             plt.show()
         else:
-            metric = knn.get_metric(ax=None, random_state=0)
+            metric = model.get_metric(ax=None, random_state=0)
 
         # Get results
         best_param = model.get_bestparameter()
