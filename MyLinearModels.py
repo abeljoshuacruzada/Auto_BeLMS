@@ -1,16 +1,7 @@
 import numpy as np
 import pandas as pd
 import warnings
-import time
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.exceptions import ConvergenceWarning
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVC
-from tqdm.autonotebook import tqdm
 from .MyMLModels import MyMLModels
 
 
@@ -57,3 +48,26 @@ class MyLinearModels(MyMLModels):
             df_weights.set_index(self._X.columns, inplace=True)
         df_weights.rename(columns={0: 'weight'}, inplace=True)
         return df_weights.apply(abs).sort_values(by='weight', ascending=False)
+    
+    def _create_weightplot_axes(self, param_dict, ax):
+        """
+        Returns matplotlib.axes.Axes for weight for each parameter.
+        Parameter should have been trained before calling.
+
+        Parameters
+        ----------
+        param_dict : dict
+            dictionary where parameters are keys and values are
+            features weights
+        ax : matplotlib.axes.Axes
+            matplotlib.axes.Axes to fill
+
+        Returns
+        -------
+        create_alphaplot_axes : matplotlib.axes.Axes
+            matplotlib.axes.Axes for alpha plot
+        """
+        # Plot each alpha
+        for param, weights in param_dict.items():
+            ax.plot(weights, 'o--', label=f'{param}')
+        return ax

@@ -14,7 +14,7 @@ from .MySVM import MySVM
 
 
 """Models to simulate"""
-models = {
+classifier_models = {
     'KNN Classifier': {
         'model': MyKNNClassifier,
         'nlist': None,  # List of neighbors to simulate
@@ -27,6 +27,7 @@ models = {
         'max_iter':1000,
         'dual':False,
         'random_state':0,
+        'n_jobs':None,
         'clist':None
     },
     'Logistic Regression L2': {
@@ -36,6 +37,7 @@ models = {
         'max_iter':1000,
         'dual':False,
         'random_state':0,
+        'n_jobs':None,
         'clist':None
     },
     'Linear SVM L1': {
@@ -69,7 +71,7 @@ models = {
 }
 
 
-def simulate(X, y, models, sim_size=20, test_size=0.25,
+def simulate_classifiers(X, y, models, sim_size=20, test_size=0.25,
                figsize=None, confmat=False):
     """
     Train all models and returns pandas DataFrame of results
@@ -90,7 +92,7 @@ def simulate(X, y, models, sim_size=20, test_size=0.25,
         test dataset size
     Returns
     -------
-    simulate : pandas DataFrame
+    simulate_classifiers : pandas DataFrame
         summary results of simulated models
     """
     data = []

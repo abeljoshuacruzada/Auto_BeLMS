@@ -53,6 +53,8 @@ class MyKNNClassifier(MyMLModels):
         self._y = y
         if nlist is None:
             nlist = self.nlist
+        else:
+            self.nlist = nlist
         # Result dataframes
         self._df_train = pd.DataFrame()
         self._df_test = pd.DataFrame()

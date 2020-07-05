@@ -1,37 +1,20 @@
 import numpy as np
 import pandas as pd
-import warnings
-import time
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
+import warnings
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.linear_model import LogisticRegression
 from tqdm.autonotebook import tqdm
-from .MyLinearModels import MyLinearModels
+from .MyLinearCModels import MyLinearCModels
 
 
-class MyLogisticRegression(MyLinearModels):
+class MyLogisticRegression(MyLinearCModels):
     """Represents a logistic regression model"""
 
-    def __init__(self, sim_size=20, test_size=0.25):
-        """
-        Instantiates an instance of MyLogisticRegression
-
-        Parameters
-        ----------
-        sim_size : int, default=20
-            Number of simulations
-        test_size : float, default=0.25
-            Test size for split
-        """
-        super().__init__(sim_size, test_size)
-        self.setting='C'
-
     def train_model(self, X, y, penalty='l2', solver='lbfgs', max_iter=100,
-                    dual=False, random_state=None, clist=None):
+                    dual=False, random_state=None, n_jobs=None,clist=None):
         """
         Train logistic regression model
         Return 2 tuple of pandas DataFrame for train and test
@@ -56,6 +39,14 @@ class MyLogisticRegression(MyLinearModels):
         random_state : int, RandomState instance, default=None
             Used when solver == ‘sag’, ‘saga’ or ‘liblinear’ to
             shuffle the data.
+        n_jobs : int, default=None
+            Number of CPU cores used when parallelizing over classes if
+            multi_class='ovr'". This parameter is ignored when the ``solver``
+            is set to 'liblinear' regardless of whether 'multi_class' is
+            specified or not. ``None`` means 1 unless in
+            a :obj:`joblib.parallel_backend`
+            context. ``-1`` means using all processors.
+            See :term:`Glossary <n_jobs>` for more details.
         clist : list of floats, optional, default=None
             A list of C to be tested in the model.
         """
@@ -63,6 +54,8 @@ class MyLogisticRegression(MyLinearModels):
         self._y = y
         if clist is None:
             clist = self.clist
+        else:
+            self.clist = clist
         # Result dataframes
         self._df_train = pd.DataFrame()
         self._df_test = pd.DataFrame()
@@ -86,7 +79,8 @@ class MyLogisticRegression(MyLinearModels):
                                                  solver=solver,
                                                  C=c,
                                                  max_iter=max_iter,
-                                                 random_state=random_state
+                                                 random_state=random_state,
+                                                 n_jobs=n_jobs
                                                  ).fit(X_train, y_train)
                     # Store result of each c
                     accuracy_train.append(cls.score(X_train, y_train))

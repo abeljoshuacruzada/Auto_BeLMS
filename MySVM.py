@@ -91,6 +91,8 @@ class MySVM(MyMLModels):
 
         if glist is None:
             glist = self.glist
+        else:
+            self.glist = glist
         # Result dataframes
         self._df_train = pd.DataFrame()
         self._df_test = pd.DataFrame()
