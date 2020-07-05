@@ -1,7 +1,7 @@
 # Auto-BeLMS
 Auto Beneficial Learning Model System
 
-Version 2.1
+Version 2.2
 
 New Feature
 
@@ -15,6 +15,7 @@ Other Changes:
 	* AutoBelms.models renamed to classifier_models
 	* AutoBelms.simulate renamed to AutoBelms.simulate_classifiers
 	* AutoBelms.classifier_models['njobs'] renamed to AutoBelms.classifier_models['n_jobs']
+	* Fix bug for KNN and SVM get_toppredictors
 
 Note:
 To run Example.ipynb, place the notebook outside Auto_BeLMS directory
