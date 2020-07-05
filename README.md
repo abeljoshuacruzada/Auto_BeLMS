@@ -5,7 +5,7 @@ Version 2.0
 
 New Feature
 
-	* Added LinearRegression (Ridge and Lasso) <br/>
+	* Added LinearRegression (Ridge and Lasso)
 	* create_weightplot_axes method for LinearModels to plot weights of each parameter
 	
 Note:
