@@ -14,7 +14,7 @@ class MyLogisticRegression(MyLinearCModels):
     """Represents a logistic regression model"""
 
     def train_model(self, X, y, penalty='l2', solver='lbfgs', max_iter=100,
-                    dual=False, random_state=None, n_jobs=None,clist=None):
+                    dual=False, random_state=None, n_jobs=None, clist=None):
         """
         Train logistic regression model
         Return 2 tuple of pandas DataFrame for train and test

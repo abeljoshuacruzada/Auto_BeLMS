@@ -19,7 +19,7 @@ classifier_models = {
     'KNN Classifier': {
         'model': MyKNNClassifier,
         'nlist': None,  # List of neighbors to simulate
-        'njobs': None
+        'n_jobs': None
     },
     'Logistic Regression L1': {
         'model': MyLogisticRegression,

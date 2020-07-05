@@ -13,6 +13,8 @@ New Feature
 Other Changes:
 
 	* AutoBelms.models renamed to classifier_models
+	* AutoBelms.simulate renamed to AutoBelms.simulate_classifiers
+	* AutoBelms.classifier_models['njobs'] renamed to AutoBelms.classifier_models['n_jobs']
 
 Note:
 To run Example.ipynb, place the notebook outside Auto_BeLMS directory
