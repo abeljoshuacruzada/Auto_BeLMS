@@ -31,6 +31,7 @@ class MyMLModels:
                       1, 1.5, 3, 5, 10, 15,  20, 100, 300, 1000, 5000]
         self.alist = [0, 1e-12, 1e-10, 1e-8, 1e-4, 1e-3,0.1, 0.2,0.4,
                       0.75, 1, 1.5, 3, 5, 10, 15,  20]
+        self.depthlist = list(range(3, 6))
         self._df_train = pd.DataFrame()
         self._df_test = pd.DataFrame()
         self._X = None

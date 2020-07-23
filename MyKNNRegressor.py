@@ -4,15 +4,14 @@ import warnings
 import time
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.exceptions import ConvergenceWarning
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 from tqdm.autonotebook import tqdm
 from .MyKNN import MyKNN
 
 
-class MyKNNClassifier(MyKNN):
-    """Represents a KNN Classifier model"""
+class MyKNNRegressor(MyKNN):
+    """Represents a KNN Regressor model"""
 
     def train_model(self, X, y, weights='uniform', leaf_size=30, p=2,
                     metric='minkowski', nlist=None, n_jobs=None):
@@ -91,13 +90,13 @@ class MyKNNClassifier(MyKNN):
                 accuracy_test = []
                 for n in nlist:
                     # Create KNN classifier for each n
-                    cls = KNeighborsClassifier(n,
-                                               weights=weights,
-                                               leaf_size=leaf_size,
-                                               p=p,
-                                               metric=metric,
-                                               n_jobs=-1
-                                               ).fit(X_train, y_train)
+                    cls = KNeighborsRegressor(n,
+                                              weights=weights,
+                                              leaf_size=leaf_size,
+                                              p=p,
+                                              metric=metric,
+                                              n_jobs=-1
+                                              ).fit(X_train, y_train)
                     # Store result of each n
                     accuracy_train.append(cls.score(X_train, y_train))
                     accuracy_test.append(cls.score(X_test, y_test))
@@ -127,20 +126,20 @@ class MyKNNClassifier(MyKNN):
             top predictors of model
         """
         if self._df_test is None:
-            raise RuntimeError('MyKNNClassifier: please train the '
+            raise RuntimeError('MyKNNRegressor: please train the '
                                'model first')
         elif n_neighbors is None:
             n = self.get_bestparameter()
         else:
             n = n_neighbors
 
-        knn = KNeighborsClassifier(n,
-                                   weights=self.weights,
-                                   leaf_size=self.leaf_size,
-                                   p=self.p,
-                                   metric=self.metric,
-                                   n_jobs=-1
-                                   ).fit(self._X, self._y)
+        knn = KNeighborsRegressor(n,
+                                  weights=self.weights,
+                                  leaf_size=self.leaf_size,
+                                  p=self.p,
+                                  metric=self.metric,
+                                  n_jobs=-1
+                                  ).fit(self._X, self._y)
         df_score = pd.DataFrame()
         features = self._X.columns
         for i in range(len(features)):
@@ -152,62 +151,3 @@ class MyKNNClassifier(MyKNN):
         df_score = (df_score.sort_values(ascending=False)
                     .to_frame().rename(columns={0: 'score'}))
         return df_score
-
-    def get_metric(self, X=None, y=None,
-                   random_state=None, n_neighbors=None, ax=None):
-        """
-        Return a confusion matrix, classification report,
-        and matplotlib.axes.Axes of confusion matrix
-        in dictionary form
-
-        Parameters
-        ----------
-        X : pandas DataFrame, default=None
-            Features. If X=None or y=None will use the X of trained model
-        y : pandas DataFrame, default=None
-            Target. If X=None or y=None will use the y of trained model
-        random_state : int, RandomState instance, default=None
-            Used to shuffle the data.
-        n_neighbors : int, default=None
-            Number of neighbors to use by default for
-            :meth:`kneighbors` queries. If None get the best parameter
-            after the model has been trained
-        ax : matplotlib.axes.Axes, default=None
-            matplotlib.axes.Axes to fill confusion matrix
-
-        Returns
-        -------
-        get_confusionmatrix : dictionary
-            Confusion matrix, classification report
-            {'confmat'=val, 'report'=val, 'ax':val}
-        """
-        param = self._set_data(X, y, random_state, n_neighbors)
-        X = param['X']
-        y = param['y']
-        ds = train_test_split(X, y, test_size=self.test_size,
-                              random_state=random_state)
-        X_train = ds[0]
-        X_test = ds[1]
-        y_train = ds[2]
-        y_test = ds[3]
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore",
-                                    category=ConvergenceWarning)
-            knn = (KNeighborsClassifier(param['parameter'],
-                                        weights=self.weights,
-                                        leaf_size=self.leaf_size,
-                                        p=self.p,
-                                        metric=self.metric,
-                                        n_jobs=-1)
-                   .fit(X_train, y_train))
-        y_pred = knn.predict(X_test)
-
-        confmat = confusion_matrix(y_true=y_test, y_pred=y_pred)
-        report = pd.DataFrame(classification_report(y_true=y_test,
-                                                    y_pred=y_pred,
-                                                    output_dict=True)).T
-
-        if ax is not None:
-            # Plot confusion matrix
-            ax = self._fill_confusionmatrix(ax, confmat)
-        return dict(confmat=confmat, report=report, ax=ax)

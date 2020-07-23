@@ -8,16 +8,22 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.exceptions import ConvergenceWarning
 from tqdm.autonotebook import tqdm
 from .MyKNNClassifier import MyKNNClassifier
+from .MyKNNRegressor import MyKNNRegressor
 from .MyLogisticRegression import MyLogisticRegression
 from .MyLinearSVM import MyLinearSVM
 from .MySVM import MySVM
 from .MyLinearRegression import MyLinearRegression
-
+from .MyDecisionTreeClassifier import MyDecisionTreeClassifier
+from .MyDecisionTreeRegressor import MyDecisionTreeRegressor
 
 """Models to simulate"""
 classifier_models = {
     'KNN Classifier': {
         'model': MyKNNClassifier,
+        'weights': 'uniform',
+        'leaf_size': 30,
+        'p': 2,
+        'metric': 'minkowski',
         'nlist': None,  # List of neighbors to simulate
         'n_jobs': None
     },
@@ -69,6 +75,17 @@ classifier_models = {
         'max_iter': 1000,
         'glist': None  # If None, will simulate glist in MyMLModels
     },
+    'Decision Tree Classifier': {
+        'model': MyDecisionTreeClassifier,
+        'max_features': None,
+        'criterion': 'gini',
+        'splitter': 'best',
+        'min_samples_split': 2,
+        'min_samples_leaf': 1,
+        'class_weight': None,
+        'random_state': 0,
+        'depthlist': None  # If None, will simulate depthlist in MyMLModels
+    }
 }
 
 
@@ -92,6 +109,25 @@ regression_models = {
         'tol': 0.001,
         'random_state': None,
         'alist': None  # If None, will simulate alist in MyMLModels
+    },
+    'KNN Regression': {
+        'model': MyKNNRegressor,
+        'weights': 'uniform',
+        'leaf_size': 30,
+        'p': 2,
+        'metric': 'minkowski',
+        'nlist': None,  # If None, will simulate nlist in MyMLModels
+        'n_jobs': None
+    },
+    'Decision Tree Regression': {
+        'model': MyDecisionTreeRegressor,
+        'max_features': None,
+        'criterion': 'mse',
+        'splitter': 'best',
+        'min_samples_split': 2,
+        'min_samples_leaf': 1,
+        'random_state': None,
+        'depthlist': None,  # If None, will simulate depthlist in MyMLModels
     }
 }
 
@@ -176,7 +212,7 @@ def simulate_classifiers(X, y, models, sim_size=20, test_size=0.25,
 
 
 def simulate_regressor(X, y, models, sim_size=20, test_size=0.25,
-                         figsize=None):
+                       figsize=None):
     """
     Train all regression models and returns pandas DataFrame of results
     models and return summary results of simulated models
